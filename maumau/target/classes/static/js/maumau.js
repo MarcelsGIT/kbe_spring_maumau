@@ -50,7 +50,7 @@ var setupGame = function(){
 	})
 };
 
-var takeCard = function(){
+/*var takeCard = function(){
 	return new Promise(function(resolve, reject){
 		$.ajax({
 						type: 'POST',
@@ -63,7 +63,7 @@ var takeCard = function(){
 							rUsers = data.users // get the user from the server
 							rProps = data.props // get the game properties
 
-							for(i = 0; i < hands)
+							for(i = 0; i < hands);
 							
 						},
 						error: function(xhr, status, err){
@@ -71,7 +71,7 @@ var takeCard = function(){
 						}
 					})
 	})
-}
+}*/
 
 setupGame();
 //When you click on the top card of a deck, a card is added

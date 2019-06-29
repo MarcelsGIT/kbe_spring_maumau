@@ -92,10 +92,9 @@ public class GameController {
 		return this.maumau != null ? this.maumau.serialize() : new HashMap<Object,Object>();
 	}
 	
-	@PostMapping(path = "/instanciateUsers", consumes = "application/json", produces = "application/json")
-	public Map<Object, Object> dealCards(){
-		Map<Object, Object> response = new HashMap<Object, Object>();
-		return response;
+	@PostMapping(path = "/playCard", consumes = "application/json", produces = "application/json")
+	public Map<Object, Object> playedCard(@RequestParam String userName){
+		return null;
 	}
 	
 	/*@PostMapping(path = "/instanciateUsers", consumes = "application/json", produces = "application/json")
