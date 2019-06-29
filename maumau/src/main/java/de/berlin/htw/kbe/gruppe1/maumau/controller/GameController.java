@@ -86,17 +86,65 @@ public class GameController {
 	/*
 	 * Request during the game are always POST and return a JSON Object 
 	 * */
+	
+	/*
+	 * Please write into the comments which solution you chose. Please describe in short the structure of the response object.
+	 * e.g. data = card.serialized OR data = {card: {rank: ##, suit: ".."}}
+	 * */
+	
+	/*
+	 * No Parameters needed. Response is just a MauMau Object.
+	 * */
 	@PostMapping(path = "/setupGame", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public Map<Object, Object> setupGame(){
 		return this.maumau != null ? this.maumau.serialize() : new HashMap<Object,Object>();
 	}
-	
+	/*
+	 * param  We don't need any parameters here as we're developing a local game at the moment. 
+	 * In  a local game we can never know which user has presses the button due to the fact they are using the same mouse 
+	 * The Solution: the current player gets a card. No matter who is pressing the button. 
+	 * response: needs to be the played card. 3 possible approaches: 
+	 * 1. Add a property to maumau which holds the playedCard and add it to the serialize Method under props
+	 * 2. Add the object manually within this method
+	 * 3. Only send the serialized card (not recommended) as card.serialize() 
+	 * */
 	@PostMapping(path = "/playCard", consumes = "application/json", produces = "application/json")
-	public Map<Object, Object> playedCard(@RequestParam String userName){
+	public Map<Object, Object> playCard(){
+		return null;
+	}
+	/*
+	 * param: @See @playCard 
+	 * response: the taken card, the three approaches metioned @playCard are possible here
+	 * 
+	 * */
+	@PostMapping(path = "/takeCard", consumes = "application/json", produces = "application/json")
+	public Map<Object, Object> takeCard(){
+		return null;
+	}
+	/*
+	 * param @See @playCard 
+	 * response: a boolean telling if it was right to shout mau.
+	 * Question: What should happen if a player shouts mau even if he is not allowed to? 
+	 * 1. Nothing
+	 * 2. deal a penalty card
+	 * */
+	@PostMapping(path = "/shoutMau", consumes = "application/json", produces = "application/json")
+	public Map<Object, Object> shoutMau(){
+		return null;
+	}
+	/*
+	 * param @See @playCard 
+	 * response: same as @shoutMau but for maumau
+	 * */
+	@PostMapping(path = "/shoutMauMau", consumes = "application/json", produces = "application/json")
+	public Map<Object, Object> shoutMauMau(){
 		return null;
 	}
 	
+	/*
+	 * Deprecated Stuff nobody needs..... 
+	 * */
 	/*@PostMapping(path = "/instanciateUsers", consumes = "application/json", produces = "application/json")
 	public Map<String,String> shoutMau(){
 		return null;
