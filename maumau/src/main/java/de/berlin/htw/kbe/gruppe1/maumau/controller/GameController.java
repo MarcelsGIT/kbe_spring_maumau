@@ -24,6 +24,7 @@ import de.berlin.htw.kbe.gruppe1.maumau.rules.modell.MauMauRules;
 import de.berlin.htw.kbe.gruppe1.maumau.userAdministration.UserService;
 import de.berlin.htw.kbe.gruppe1.maumau.userAdministration.modell.MauMauUser;
 import de.berlin.htw.kbe.gruppe1.maumau.util.CardMapper;
+import de.berlin.htw.kbe.gruppe1.maumau.util.exceptions.CardNotFoundException;
 import de.berlin.htw.kbe.gruppe1.maumau.virtualUserAdministration.VirtualUserService;
 
 @Controller
@@ -93,7 +94,7 @@ public class GameController {
 	 * */
 	
 	/*
-	 * No Parameters needed. Response is just a MauMau Object.
+	 * No Parameters needed. Response is just a serialized MauMau Object.
 	 * */
 	@PostMapping(path = "/setupGame", consumes = "application/json", produces = "application/json")
 	@ResponseBody
@@ -101,29 +102,38 @@ public class GameController {
 		return this.maumau != null ? this.maumau.serialize() : new HashMap<Object,Object>();
 	}
 	/*
-	 * param  We don't need any parameters here as we're developing a local game at the moment. 
-	 * In  a local game we can never know which user has presses the button due to the fact they are using the same mouse 
-	 * The Solution: the current player gets a card. No matter who is pressing the button. 
-	 * response: needs to be the played card. 3 possible approaches: 
+	 * param: symbol, value || will look like this: {rank: value, suit: symbol}
+	 * response: hasToTake (bool), hasToPlay (serialized Symbol (restriction when a jack was played)), amountToTake (int), 
+	 * jack (bool, when this player can choose the color), nextPlayer ({username: username}) 
+	 * 
+	 * possible approaches: 
 	 * 1. Add a property to maumau which holds the playedCard and add it to the serialize Method under props
 	 * 2. Add the object manually within this method
 	 * 3. Only send the serialized card (not recommended) as card.serialize() 
 	 * */
 	@PostMapping(path = "/playCard", consumes = "application/json", produces = "application/json")
-	public Map<Object, Object> playCard(){
+	public Map<Object, Object> playCard(@RequestParam Map<Object, Object> played){
+		
+		try {
+			//Deserialize the Card Object, if the player who made the request is not the current Player an exception is thrown
+			Card playedCard = CardMapper.mapFrontendCardToBackendCard((String)played.get("suit"), (int) played.get("rank"), this.maumau.getCurrentPlayer().getHand());
+		}catch(CardNotFoundException e) {
+			//maybe return an error code 403 forbidden? dont know how... 
+		}
 		return null;
 	}
 	/*
-	 * param: @See @playCard 
-	 * response: the taken card, the three approaches metioned @playCard are possible here
-	 * 
+	 * param: We don't need any parameters here as we're developing a local game at the moment. 
+	 * In  a local game we can never know which user has presses the button due to the fact they are using the same mouse 
+	 * The Solution: the current player gets a card. No matter who is pressing the button.
+	 * response: the taken card AND the userName of the user that gets the card. the three approaches mentioned @takeCard are possible here
 	 * */
 	@PostMapping(path = "/takeCard", consumes = "application/json", produces = "application/json")
 	public Map<Object, Object> takeCard(){
 		return null;
 	}
 	/*
-	 * param @See @playCard 
+	 * param @See @takeCard 
 	 * response: a boolean telling if it was right to shout mau.
 	 * Question: What should happen if a player shouts mau even if he is not allowed to? 
 	 * 1. Nothing
@@ -134,7 +144,7 @@ public class GameController {
 		return null;
 	}
 	/*
-	 * param @See @playCard 
+	 * param @See @takeCard 
 	 * response: same as @shoutMau but for maumau
 	 * */
 	@PostMapping(path = "/shoutMauMau", consumes = "application/json", produces = "application/json")
