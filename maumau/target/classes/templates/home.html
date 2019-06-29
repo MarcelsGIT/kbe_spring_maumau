@@ -1,0 +1,20 @@
+<html>
+<head>
+	<title>Home Page</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style/example.css"/>
+	<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+	<script src="js/jquery-1.7.min.js"></script>
+</head>
+<body style="height: 250px;">
+<h1>Welcome to <span th:text="${appName}">Our App</span></h1>
+<p>
+	This Application enables you to play MauMau, the greatest game ever. With your friends in a local game or against a super smart super computer.
+	Just choose your mode and get started. Have fun!
+</p>
+<div>
+	<button id="onePlayer"style="float: right; width: 150px; height: 75px; border-radius: 5px"><a href="/gameConfig?virtualPlayer=1&playersCount=1">1 player game</a></button>
+	<button id="twoPlayer" style="float: right; width: 150px; height: 75px; border-radius: 5px; margin-right: 50px;"><a href="/gameConfig?virtualPlayer=0&playersCount=2">2 player game</a></button>
+</div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+/*
+See an example of the serialized JSON Object maumau 
+"" means a string 
+bool means a boolean 
+## means a number 
+{} wrapps an object
+*/
+
+{
+	id: ##,
+	decks: {
+		deck:{
+			id: ##,
+			cards: {
+				##: {
+					id: ##,
+					ownerId: ##,
+					deckId: ##,
+					values: {
+						suit: "", //example string
+						rank: ##, 
+						shortName: "" //for example suit = h, rank = 7, shortName = h7
+					}
+				}
+			}
+		},
+		graveyard:{
+			id: ##,
+			cards: {
+				##: {
+					id: ##,
+					ownerId: ##,
+					deckId: ##,
+					value: {
+						suit: "", //example string
+						rank: ##, 
+						shortName: "" //for example suit = h, rank = 7, shortName = h7
+					}
+				}
+			}
+		} 
+		
+	},
+	users: {
+		"": {
+			id: ##,
+			isActive: bool,
+			mau: bool,
+			maumau: bool,
+			username: "",
+			virtualUser: bool,
+			hand: {
+				##: {
+					id: ##,
+					ownerId: ##,
+					deckId: ##,
+					values: {
+						suit: "", //example string
+						rank: ##, 
+						shortName: "" //for example suit = h, rank = 7, shortName = h7
+					}
+				}
+			}
+		}
+	},
+	props:{
+		amountSeven: ##,
+		currentPlayer: {
+			id: ##,
+			isActive: bool,
+			mau: bool,
+			maumau: bool,
+			username: "",
+			virtualUser: bool,
+			hand: {
+				##: {
+					id: ##,
+					ownerId: ##,
+					deckId: ##,
+					values: {
+						suit: "", //example string
+						rank: ##, 
+						shortName: "" //for example suit = h, rank = 7, shortName = h7
+					}
+				}
+			}
+		}
+		},
+		endGame: bool,
+		penaltyTime: bool,
+		playAgain: bool,
+		rules: {
+			id: ##,
+			jackOnEverything: bool,
+			jackOnJack: bool
+		},
+		userWish: "",
+		winner: {
+			id: ##,
+			isActive: bool,
+			mau: bool,
+			maumau: bool,
+			username: "",
+			virtualUser: bool,
+			hand: {
+				##: {
+					id: ##,
+					ownerId: ##,
+					deckId: ##,
+					values: {
+						suit: "", //example string
+						rank: ##, 
+						shortName: "" //for example suit = h, rank = 7, shortName = h7
+					}
+				}
+			},
+	}
+}
