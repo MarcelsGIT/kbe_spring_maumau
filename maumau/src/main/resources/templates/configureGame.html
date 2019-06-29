@@ -1,0 +1,49 @@
+<html>
+<head>
+	<title>Home Page</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style/example.css"/>
+	<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+	<script src="js/jquery-1.7.min.js"></script>
+	<script src="js/controller.js"></script>
+</head>
+<body style="height: 250px;">
+<h1>Set the game up</span></h1>
+<p>
+	Please type in the names of the players.
+</p>
+<ul style="list-style: none;">
+<li th:each="i: ${#numbers.sequence(0, T(Integer).parseInt(param.playersCount) - 1)}">
+	<input style="margin-bottom: 15px"class="usernameInput" type="text" th:name="username + ${i}" required="true"/>
+</li>
+</ul>
+<div>
+	<button id="startGame" style="float: right; width: 150px; height: 75px; border-radius: 5px">Start new local Game</button>
+	<button id="save" style="display: none"><a th:href="@{/game(virtualPlayer=${param.virtualPlayer}, playerCount=${param.playersCount}, newGame=1)}">hiddenButton</a></button>
+</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//$('#save a').on('click', instanciateUsers)
+		$('#startGame').on('click', function( e ){
+			var usernames = ''
+			var playerCount = $('.usernameInput').length
+			var href = $('#save a').prop('href')
+			
+			$('.usernameInput').each(function( index , elem ){
+				if($(elem).val().trim() == "") return;
+				
+				usernames += '&' + 'userNames=' + $(elem).val()
+				if(playerCount -1 == index ) {
+					$('#save a').prop('href', href + usernames)
+					$('#save a')[0].click()
+				}
+			});
+		});
+	});
+
+	
+	
+
+</script>
+</html>
