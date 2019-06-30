@@ -1,14 +1,19 @@
 package de.berlin.htw.kbe.gruppe1.maumau.cardGameUser.modell.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
 
 import de.berlin.htw.kbe.gruppe1.maumau.cards.modell.Card;
 import de.berlin.htw.kbe.gruppe1.maumau.cards.modell.Symbol;
@@ -23,8 +28,8 @@ public class CardGameUserTest {
 	static public List <Card> cardHand;
 	static private UserService userMgmt;
 
-	@Before
-	public void setUpBeforeClass() throws Exception {
+	@BeforeAll
+	public static void setUpBeforeClass() throws Exception {
 		userMgmt = new UserMgmt();
 		mauMauUser = new MauMauUser("Kaan", cardHand, 0, false, false, false, false, false);
 		cardHand = new LinkedList<Card>();
@@ -34,20 +39,20 @@ public class CardGameUserTest {
 		mauMauUser.setHand(cardHand);
 	}
 	
-	@Test(expected = IndexOutOfBoundsException.class)
+	@Test//(expected = IndexOutOfBoundsException.class)
 	public void testPlayCardWithNegativeIndex() {
 		// Arrange
 		int index = -1;
 		// Act
-		userMgmt.playCard(index, mauMauUser);
+		assertThrows(IndexOutOfBoundsException.class, () ->userMgmt.playCard(index, mauMauUser));
 	}
 	
-	@Test(expected = IndexOutOfBoundsException.class)
+	@Test
 	public void testPlayCardWithIndexTooHigh() {
 		// Arrange
 		int index = 3;
 		// Act
-		userMgmt.playCard(index, mauMauUser);
+		assertThrows(IndexOutOfBoundsException.class, () -> userMgmt.playCard(index, mauMauUser));
 	}
 
 	@Test
@@ -62,6 +67,11 @@ public class CardGameUserTest {
 
 	@Test
 	public void testShoutMauWithMoreThanTwoCards() {
+		List<Card>cardHandThreeCards = new LinkedList<>();
+		cardHandThreeCards.add(new Card(Symbol.CLUB, Value.EIGHT));
+		cardHandThreeCards.add(new Card(Symbol.DIAMOND, Value.ACE));
+		cardHandThreeCards.add(new Card(Symbol.HEART, Value.JACK));
+		mauMauUser.setHand(cardHandThreeCards);
 		assertEquals(userMgmt.shoutMau(mauMauUser), "I can't shout Mau yet!");
 	}
 	
@@ -70,21 +80,26 @@ public class CardGameUserTest {
 		List<Card>cardHandOneCard = new LinkedList<>();
 		cardHandOneCard.add(new Card(Symbol.CLUB, Value.EIGHT));
 		mauMauUser.setHand(cardHandOneCard);
-		userMgmt.shoutMau(mauMauUser);
-		Assert.assertTrue("You cannot shout 'Mau' with only one card in your hand!", mauMauUser.getHand().size() < 2);
+		String mau = userMgmt.shoutMau(mauMauUser);
+		assertEquals("I need to shout MauMau!", mau);
 	}
 
 	@Test
 	public void testShoutMauMauWithMoreThanOneCard() {
-		int cardsInHand = mauMauUser.getHand().size();
-		userMgmt.shoutMauMau(mauMauUser);
-		Assert.assertTrue("You have more than one card in your hand!", cardsInHand > 1);
+		List<Card>cardHandTwoCards = new LinkedList<>();
+		cardHandTwoCards.add(new Card(Symbol.CLUB, Value.EIGHT));
+		cardHandTwoCards.add(new Card(Symbol.DIAMOND, Value.ACE));
+		mauMauUser.setHand(cardHandTwoCards);
+		String maumau = userMgmt.shoutMauMau(mauMauUser);
+		assertEquals("This is not my last card, so I can't shout MauMau yet!", maumau);
 	}
 	
 	@Test
 	public void testShoutMauMauIsValid() {
-		int cardsInHand = 1;
-		userMgmt.shoutMauMau(mauMauUser);
-		Assert.assertTrue(cardsInHand == 1);
+		List<Card>cardHandOneCard = new LinkedList<>();
+		cardHandOneCard.add(new Card(Symbol.CLUB, Value.EIGHT));
+		mauMauUser.setHand(cardHandOneCard);		
+		String maumau = userMgmt.shoutMauMau(mauMauUser);
+		assertEquals("MauMau!", maumau);
 	}
 }
