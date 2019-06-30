@@ -119,6 +119,8 @@ public class GameController {
 	 * check if user wish fulfilled 3. If last card 7 check if
 	 * maumau.getAmountSeven>0, if yes, card has to be a 7 4. Check if card is
 	 * generally allowed to be played -> 2. 4. done by ruleservice method:
+	 * -> There is also a general method that checks beforehand if a user can play: ruleService checkIfUserCanPlay
+	 * 
 	 * validCardOrNotValidCard
 	 * 
 	 * 
@@ -152,6 +154,7 @@ public class GameController {
 	 * User has to take two cards amount 7 = 2 -> User has to take four cards Don't
 	 * forget to set amountSeven to 0 afterwards Don't forget to do mauamu.next
 	 * player
+	 * Mehtod that  does this: MauMauService: giveAllCardsToUserThatUserHasToTake
 	 * 
 	 */
 	@PostMapping(path = "/takeCard", consumes = "application/json", produces = "application/json")
