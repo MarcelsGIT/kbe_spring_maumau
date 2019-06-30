@@ -115,10 +115,13 @@ public class GameController {
 	 * within this method 3. Only send the serialized card (not recommended) as
 	 * card.serialize()
 	 * 
-	 * Check before allowing to play: 	1. User correct user 
-	 * 									2. If last card bube, check if user wish fulfilled 
-	 * 									3. If last card 7 check if maumau.getAmountSeven>0, if yes, card has to be a 7
-	 * 									4. Check if card is generally allowed to be played
+	 * Check before allowing to play: 1. User correct user 2. If last card bube,
+	 * check if user wish fulfilled 3. If last card 7 check if
+	 * maumau.getAmountSeven>0, if yes, card has to be a 7 4. Check if card is
+	 * generally allowed to be played -> 2. 4. done by ruleservice method:
+	 * validCardOrNotValidCard
+	 * 
+	 * 
 	 * 
 	 */
 	@PostMapping(path = "/playCard", consumes = "application/json", produces = "application/json")
@@ -145,10 +148,10 @@ public class GameController {
 	 * approaches mentioned @takeCard are possible here
 	 * 
 	 * Check beofre giving card: 1. If maumau.getAmountSeven>0; Give amount of cards
-	 * that the user has to take - not only the single card
-	 * E.g.:	amount 7 = 1 -> User has to take two cards
-	 * 			amount 7 = 2 -> User has to take four cards
-	 * Don't forget to set amountSeven to 0 afterwards
+	 * that the user has to take - not only the single card E.g.: amount 7 = 1 ->
+	 * User has to take two cards amount 7 = 2 -> User has to take four cards Don't
+	 * forget to set amountSeven to 0 afterwards Don't forget to do mauamu.next
+	 * player
 	 * 
 	 */
 	@PostMapping(path = "/takeCard", consumes = "application/json", produces = "application/json")
@@ -161,6 +164,13 @@ public class GameController {
 	 * mau. Question: What should happen if a player shouts mau even if he is not
 	 * allowed to? 1. Nothing 2. deal a penalty card 3. Give the user the
 	 * information that he/she does currently not have the permision to do that
+	 * 
+	 * Check for: 1. User correct user (Difficult -> user theoretically needs to
+	 * 				have possibility to shout mau quickly after card was played and before next
+	 * 				user plays 
+	 * 			  2. User allowed to shout mau (ruleService)
+	 * Then don't forget to set user mau
+	 * 				
 	 */
 	@PostMapping(path = "/shoutMau", consumes = "application/json", produces = "application/json")
 	public Map<Object, Object> shoutMau() {
@@ -174,27 +184,19 @@ public class GameController {
 	public Map<Object, Object> shoutMauMau() {
 		return null;
 	}
-	
-	
-	////////////Method for making user wish missing////////
-	
-	///////////Method for informing other user about userwish missing/////////
-	
-	/////////Method for skipRound missing (just set next player if playCard checks if person who wants to play is currentPlayer////////
-	
-	////////All virtual user methods missing (play next possible  card, set userwish, shout mau, shout maumau)//////
-	
-	
+
+	//////////// Method for making user wish missing////////
+
+	/////////// Method missing for informing other user about userwish /////////
+
+	///////// Method for skipRound missing (just set next player if playCard checks
+	///////// if person who wants to play is currentPlayer////////
+
+	//////// All virtual user methods missing (play next possible card, set
+	//////// userwish, shout mau, shout maumau)//////
 
 	
 	
-	
-	
-	
-	
-	
-	
-
 	/*
 	 * Deprecated Stuff nobody needs.....
 	 */
